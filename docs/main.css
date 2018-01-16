@@ -1,0 +1,9 @@
+body {
+    background-color:#F0F0F0;
+    padding: 2em;
+    font-family: 'Raleway','Source Sans Pro', 'Arial';
+}
+.container {
+    width: 75%;
+    margin: 0 auto;
+}
