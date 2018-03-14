@@ -16,12 +16,12 @@
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Auction Away</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="http://localhost:8080/signin">Login/Signup</a></li>
-        <li><a href="http://localhost:8080/profile">Profile</a></li>
+        <li class="active"><a href="http://localhost:8080/profile">Profile</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="http://localhost:8080/profile">Login/Signup</a></li>
-        <li><a href="http://localhost:8080/profile">Profile</a></li>
+        <li><a href="http://localhost:8080/signin">Login/Signup</a></li>
+        <li class="active"><a href="http://localhost:8080/profile">Profile</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
@@ -46,31 +46,27 @@
                     </div>
                     
                     <div class="col s12 m6 l6 ">
-                        <div class="row">
-                      <span class="black-text ">
-                         <b>Item Id : </b>1234566<br>
-                         <b>Item Name : </b>killer product<br>
-                        <b>Seller : </b>Mr. killer<br>
-                        <b>Time of Auction : </b>March 16 2018, 8:00 p.m<br>
-                        <b>Starting Price : </b> Rs. 1200/- <br>
-                        <b>Security Deposit : </b> Rs. 200/- <br>
-                            </span></div>
-                        <div class="row">
-                                <span class="black-text flow-text">
-                        <span>this is a short product description that fits into the card. This doesnt have anything sensible. this product was developed int he esteemed labs of TRuntintation Pvt. Ltd.</span>
-                      </span>
-                      </div>
-                     
+                            <span class="right"> <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit details"><i class=" medium material-icons">edit</i></a></span>
+                            <br><br><br>
+                            <div class="row">
 
+                      <span class="black-text flow-text">
+
+                        <h3>Mr. Killer</h3>
+                         <b>User Id : </b>1234566<br>
+                         <b>Email id : </b>killer@killer.com<br>
+                        <b>Wallet Balance : </b>30,000/-<br>
+                            </span>
+                        
+                        </div>
+                        <span class="right"> <a href="http://localhost:8080/additem" class="btn-floating btn-large waves-effect waves-light teal tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Item for Auction"><i class=" medium material-icons">add</i></a></span>
                     </div>
-                    <br>
-                    <span class="right"><a class="btn-flat " href="http://localhost:8080/auction" >Go to Auction</a></span>
                   </div>
                   </div>
                 </div>
           </div>
         </div>
-    <br>
+    
   </div>
 </div>
 

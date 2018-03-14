@@ -25,3 +25,7 @@ app.get('/itemdetails', function(req, res) {
 app.get('/additem', function(req, res) {
     res.sendFile(path.join(__dirname +'/public'+ '/additem.html'));
 });
+
+app.get('/profile', function(req, res) {
+    res.sendFile(path.join(__dirname +'/public'+ '/profile.html'));
+});
