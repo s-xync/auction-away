@@ -7,7 +7,7 @@ const auctionSchema=mongoose.Schema({
     required: true
   },
   sellerid:{
-    type:Schema.Types.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     ref:'User',
     required:true
   },
@@ -16,11 +16,11 @@ const auctionSchema=mongoose.Schema({
     required:true
   },
   bidprice:{
-    type:Integer,
+    type:Number,
     required:true
   },
   securitydeposit:{
-    type:Integer,
+    type:Number,
     required:true
   },
   description:{
@@ -34,8 +34,8 @@ const auctionSchema=mongoose.Schema({
     //0 INACTIVE
     //1 ACTIVE
     //2 OVER
-    type:Integer,
-    required:true
+    type:Number,
+    default:0
   },
   createtime:{
     type:Date,
@@ -65,7 +65,7 @@ module.exports.getAuctionById=(id,callback)=>{
 
 //add auction to the database
 module.exports.addAuction=(auction,callback)=>{
-  Auction.create(id,callback);
+  Auction.create(auction,callback);
 }
 
 module.exports.removeAuction=(id,callback)=>{

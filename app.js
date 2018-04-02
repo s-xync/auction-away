@@ -45,6 +45,7 @@ app.get('/api/getauction/:_id', (req, res) => {
 
 app.post('/api/addauction', (req, res) => {
   var auction=req.body;
+  //TODO have to add code to create imageurl from uploaded image
   Auction.addAuction(auction, (err, auction) => {
     if(err){
       throw err;
@@ -53,7 +54,7 @@ app.post('/api/addauction', (req, res) => {
   });
 });
 
-app.delete('api/removeauction/:_id' (req, res) => {
+app.delete('api/removeauction/:_id', (req, res) => {
   var id=req.params._id;
   Auction.removeAuction(id, (err, auction) => {
     if(err){
@@ -63,7 +64,26 @@ app.delete('api/removeauction/:_id' (req, res) => {
   });
 });
 
+app.post('api/register',(req, res) => {
+  var userinput=req.body;
+  //TODO have to add code to create imageurl from uploaded image
+  User.register(userinput, (err, user) => {
+    if(err){
+      throw err;
+    }
+    res.json(user);
+  });
+});
 
+app.post('api/login',(req, res) => {
+  var userinput=req.body;
+  User.login(userinput, (err, user) => {
+    if(err){
+      throw err;
+    }
+    res.json(user);
+  });
+});
 
 //pages
 app.get('/', function(req, res) {
