@@ -17,7 +17,7 @@ const userSchema=mongoose.Schema({
     required:true
   },
   balance:{
-    type:mongoose.Schema.Types.Decimal128,
+    type:Number,
     default:0
   },
   imageurl:{
@@ -32,8 +32,8 @@ const userSchema=mongoose.Schema({
 const User=module.exports=mongoose.model('User',userSchema);
 
 function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 }
 
 module.exports.register=(user,callback)=>{
@@ -60,15 +60,13 @@ module.exports.login=(userinput,callback)=>{
     email:userinput.email
   }
   User.findOne(query,function(err,retrievedUser){
-    bcrypt.compare(userinput.password, retrievedUser.password, function(err, res) {
-      if(err){
-        return callback(err);
-      }else if(res){
-        return callback(retrievedUser);
-      }else{
-        return callback(null);
-      }
-    });
+    if(retrievedUser){
+      bcrypt.compare(userinput.password, retrievedUser.password, function(err, res) {
+        return callback(retrievedUser,err,res);
+      });
+    }else{
+      return callback(retrievedUser);
+    }
   });
 
 }
