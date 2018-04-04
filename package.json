@@ -26,6 +26,15 @@
     "body-parser": "*",
     "mongoose": "*",
     "node-gyp": "*",
-    "bcrypt": "*"
+    "bcrypt": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   }
 }
