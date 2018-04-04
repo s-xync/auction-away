@@ -112,4 +112,68 @@ passport.use(new LocalStrategy(
     res.redirect('/users/login');
   });
 
+  router.get('/profile',ensureAuthenticated,function(req,res){
+    var id=req.user._id;
+    request.get('http://localhost:3000/auctions/api/soldby'+id,(err,response,body)=>{
+      if(response.statusCode==200){
+        var soldAuctions=JSON.parse(body);
+      }else{
+        console.log(err);
+        req.flash('error_msg', err.name);
+        res.redirect('/');
+      }
+    });
+    request.get('http://localhost:3000/auctions/api/boughtby'+id,(err,response,body)=>{
+      if(response.statusCode==200){
+        var boughtAuctions=JSON.parse(body);
+      }else{
+        console.log(err);
+        req.flash('error_msg', err.name);
+        res.redirect('/');
+      }
+    });
+    res.render('profile',{user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
+  });
+
+  request.post('/addmoney',ensureAuthenticated,(req,res)=>{
+    var userid=req.user._id;
+    var amount=parseInt(req.body.amount);
+    if(!isNan(amount) && amount>0){
+      User.findById(userid,function(err,user){
+        if(err){
+          console.log(err);
+          req.flash('error_msg', err.name);
+          res.redirect('/');
+        }
+        if(user){
+          user.balance=user.balance+amount;
+          user.save(function(err){
+            if(err){
+              console.log(err);
+              req.flash('error_msg', err.name);
+              res.redirect('/');
+            }else{
+              req.flash('success_msg', 'Money added');
+              res.redirect('/users/profile');
+            }
+          });
+        }else{
+          req.flash('error_msg','Unknown User');
+      		res.redirect('/users/login');
+        }
+      });
+    }else{
+      req.flash('error_msg','Check the amount');
+  		res.redirect('/users/profile');
+    }
+  });
+
+  function ensureAuthenticated(req, res, next){
+  	if(req.isAuthenticated()){
+  		return next();
+  	} else {
+  		//req.flash('error_msg','You are not logged in');
+  		res.redirect('/users/login');
+  	}
+  }
   module.exports = router;

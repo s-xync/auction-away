@@ -4,6 +4,7 @@ const request = require('request');
 
 var Auction = require('../models/auction');
 
+//not really used anywhere
 router.get('/api/all', (req, res) => {
   Auction.getAllAuctions((err, auctions) => {
     if(err){
@@ -38,6 +39,42 @@ router.get('/api/auction/:_id', (req, res) => {
   });
 });
 
+router.get('/api/soldby/:_id', (req, res) => {
+  var sellerid=req.params._id;
+  Auction.allSoldBy(sellerid, (err, auctions) => {
+    if(err){
+      console.log(err);
+      res.status(500).send({error:{name:err.name,message:err._message}});
+    }else{
+      res.json(auctions);
+    }
+  });
+});
+
+router.get('/api/boughtby/:_id', (req, res) => {
+  var buyerid=req.params._id;
+  Auction.getAuctionById(buyerid, (err, auctions) => {
+    if(err){
+      console.log(err);
+      res.status(500).send({error:{name:err.name,message:err._message}});
+    }else{
+      res.json(auctions);
+    }
+  });
+});
+
+// app.delete('/removeauction/:_id', (req, res) => {
+//   var id=req.params._id;
+//   Auction.removeAuction(id, (err, auction) => {
+//     if(err){
+//       console.log(err);
+//       res.status(500).send({error:{name:err.name,message:err._message}});
+//     }else{
+//       res.json(auction);
+//     }
+//   });
+// });
+
 router.get('/auction/:_id',(req,res)=>{
   var id=req.params._id;
   request.get('http://localhost:3000/auctions/api/'+id,(err,response,body)=>{
@@ -45,7 +82,9 @@ router.get('/auction/:_id',(req,res)=>{
       var auction=JSON.parse(body);
       res.render('auction',auction);//single auction object
     }else{
-      res.render('error',response.error);
+      console.log(err);
+      req.flash('error_msg', err.name);
+      res.redirect('/');
     }
   });
 });
@@ -71,6 +110,7 @@ router.post('/addauction',ensureAuthenticated,(req,res)=>{
       req.flash('error_msg', err.name);
       res.redirect('/auctions/addauction');
     }else{
+      req.flash('success_msg','Auction added successfully');
       res.redirect('/auctions/auction/'+auction._id);
       //left here at 10am
     }

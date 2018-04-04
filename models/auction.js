@@ -11,6 +11,10 @@ const auctionSchema=mongoose.Schema({
     ref:'User',
     required:true
   },
+  buyerid:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User',
+  },
   starttime:{
     type:Date,
     required:true
@@ -73,4 +77,20 @@ module.exports.removeAuction=(id,callback)=>{
     _id:id
   };
   Auction.remove(query,callback);
+}
+
+//get all auctions associated with a seller
+module.exports.allSoldBy=(sellerid,callback,limit)=>{
+  var query={
+    sellerid:sellerid
+  };
+  Auction.find(query,callback).sort({"starttime":1}).limit(limit);
+}
+
+//get all auctions bought by a buyer
+module.exports.allBoughtBy=(buyerid,callback,limit)=>{
+  var query={
+    buyerid:buyerid
+  };
+  Auction.find(query,callback).sort({"starttime":1}).limit(limit);
 }
