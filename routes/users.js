@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const request = require('request');
 
 var User = require('../models/user');
 
@@ -135,7 +136,7 @@ passport.use(new LocalStrategy(
     res.render('profile',{user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
   });
 
-  request.post('/addmoney',ensureAuthenticated,(req,res)=>{
+  router.post('/addmoney',ensureAuthenticated,(req,res)=>{
     var userid=req.user._id;
     var amount=parseInt(req.body.amount);
     if(!isNan(amount) && amount>0){

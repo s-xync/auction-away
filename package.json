@@ -21,12 +21,11 @@
   },
   "homepage": "https://github.com/s-xync/auction-away#readme",
   "dependencies": {
-    "materialize-css": "^0.100.2",
     "express": "*",
     "body-parser": "*",
     "mongoose": "*",
     "node-gyp": "*",
-    "bcrypt": "*",
+    "bcryptjs": "*",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
     "express-handlebars": "*",
