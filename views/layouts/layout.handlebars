@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>{{title}}</title>
+  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <!-- Scripts -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="teal darken-3" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Auction Away</a>
+      <ul class="right hide-on-med-and-down">
+        {{#if user}}
+        <li><a href="/users/profile">My Profile</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+        {{else}}
+        <li><a href="/users/login">Login</a></li>
+        <li><a href="/users/register">Register</a></li>
+        {{/if}}
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        {{#if user}}
+        <li><a href="/users/profile">My Profile</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+        {{else}}
+        <li><a href="/users/login">Login</a></li>
+        <li><a href="/users/register">Register</a></li>
+        {{/if}}
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <!-- Views get rendered here -->
+  {{{body}}}
+  <!-- Script -->
+  <script type="text/javascript" src = "/js/init.js"></script>
+  <!-- Footer -->
+  <footer class="page-footer teal darken-3">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of two college students who is living a mediocre life working on this project like it's our full time job. Any contribution that would help support and continue development of this project is greatly appreciated.</p>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Contribute</h5>
+          <ul>
+            <li><a class="white-text" href="https://s-xync.github.io/auction-away/" target="_blank">Development Website</a></li>
+            <li><a class="white-text" href="https://github.com/s-xync/auction-away" target="_blank">Github Repo</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">Made using <a class="orange-text text-lighten-3" href="http://materializecss.com" target="_blank">Materialize</a>
+      </div>
+    </div>
+  </footer>
+</body>

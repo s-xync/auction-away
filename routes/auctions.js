@@ -9,7 +9,7 @@ router.get('/api/all', (req, res) => {
   Auction.getAllAuctions((err, auctions) => {
     if(err){
       console.log(err);
-      res.status(500).send({error:{name:err.name,message:err._message}});
+      throw err;
     }else{
       res.json(auctions);
     }
@@ -20,7 +20,8 @@ router.get('/api/notover', (req, res) => {
   Auction.getNotOverAuctions((err, auctions) => {
     if(err){
       console.log(err);
-      res.status(500).send({error:{name:err.name,message:err._message}});
+      // res.status(500).send({error:{name:err.name,message:err._message}});
+      throw err;
     }else{
       res.json(auctions);
     }
@@ -32,7 +33,7 @@ router.get('/api/auction/:_id', (req, res) => {
   Auction.getAuctionById(id, (err, auction) => {
     if(err){
       console.log(err);
-      res.status(500).send({error:{name:err.name,message:err._message}});
+      throw err;
     }else{
       res.json(auction);
     }
@@ -44,7 +45,8 @@ router.get('/api/soldby/:_id', (req, res) => {
   Auction.allSoldBy(sellerid, (err, auctions) => {
     if(err){
       console.log(err);
-      res.status(500).send({error:{name:err.name,message:err._message}});
+      throw err;
+      // res.status(500).send({error:{name:err.name,message:err._message}});
     }else{
       res.json(auctions);
     }
@@ -53,10 +55,11 @@ router.get('/api/soldby/:_id', (req, res) => {
 
 router.get('/api/boughtby/:_id', (req, res) => {
   var buyerid=req.params._id;
-  Auction.getAuctionById(buyerid, (err, auctions) => {
+  Auction.allBoughtBy(buyerid, (err, auctions) => {
     if(err){
       console.log(err);
-      res.status(500).send({error:{name:err.name,message:err._message}});
+      throw err;
+      // res.status(500).send({error:{name:err.name,message:err._message}});
     }else{
       res.json(auctions);
     }
@@ -77,20 +80,20 @@ router.get('/api/boughtby/:_id', (req, res) => {
 
 router.get('/auction/:_id',(req,res)=>{
   var id=req.params._id;
-  request.get('http://localhost:3000/auctions/api/'+id,(err,response,body)=>{
+  request.get('http://localhost:3000/auctions/api/auction/'+id,(err,response,body)=>{
     if(response.statusCode==200){
       var auction=JSON.parse(body);
-      res.render('auction',auction);//single auction object
+      res.render('auction',{title:auction.name+" | Auction Away",auction:auction});//single auction object
     }else{
       console.log(err);
-      req.flash('error_msg', err.name);
+      req.flash('error_msg',"Something is wrong");
       res.redirect('/');
     }
   });
 });
 
 router.get('/addauction',ensureAuthenticated,(req,res)=>{
-  res.render('addauction');
+  res.render('addauction',{title:"Create Auction | Auction Away"});
 });
 
 router.post('/addauction',ensureAuthenticated,(req,res)=>{
@@ -105,14 +108,14 @@ router.post('/addauction',ensureAuthenticated,(req,res)=>{
     imageurl:req.body.imageurl
   });
   Auction.addAuction(newAuction,(err,auction)=>{
+    console.log(auction);
     if(err){
       console.log(err);
-      req.flash('error_msg', err.name);
+      req.flash('error_msg', "Something is wrong");
       res.redirect('/auctions/addauction');
     }else{
       req.flash('success_msg','Auction added successfully');
-      res.redirect('/auctions/auction/'+auction._id);
-      //left here at 10am
+      res.redirect('/auctions/auction/'+auction['_id']);
     }
   });
 });

@@ -8,12 +8,12 @@ var User = require('../models/user');
 
 // Register
 router.get('/register', function(req, res){
-  res.render('register');
+  res.render('register',{title:"Register | Auction Away"});
 });
 
 // Login
 router.get('/login', function(req, res){
-  res.render('login');
+  res.render('login',{title:"Login | Auction Away"});
 });
 
 // Register User
@@ -38,7 +38,7 @@ router.post('/register', function(req, res){
   var errors = req.validationErrors();
 
   if(errors){
-    res.render('register',{
+    res.render('register',{title:"Register | Auction Away",
       errors:errors
     });
   } else {
@@ -103,8 +103,8 @@ passport.use(new LocalStrategy(
     });
   });
 
-  router.post('/login',passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),function(req, res){
-    res.redirect('/');
+  router.post('/login',passport.authenticate('local', {successRedirect:'/users/profile', failureRedirect:'/users/login',failureFlash: true}),function(req, res){
+    res.redirect('/users/profile');
   });
 
   router.get('/logout', function(req, res){
@@ -115,25 +115,27 @@ passport.use(new LocalStrategy(
 
   router.get('/profile',ensureAuthenticated,function(req,res){
     var id=req.user._id;
-    request.get('http://localhost:3000/auctions/api/soldby'+id,(err,response,body)=>{
-      if(response.statusCode==200){
+    request.get('http://localhost:3000/auctions/api/soldby/'+id,(err,response,body)=>{
+      if(!err){
         var soldAuctions=JSON.parse(body);
+        console.log(soldAuctions);
+        request.get('http://localhost:3000/auctions/api/boughtby/'+id,(err,response,body)=>{
+          if(!err){
+            var boughtAuctions=JSON.parse(body);
+            res.render('profile',{title:req.user.firstname+""+req.user.lastname+" | Auction Away",user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
+          }else{
+            console.log(err);
+            req.flash('error_msg', "Something is wrong");
+            res.redirect('/');
+          }
+        });
       }else{
         console.log(err);
-        req.flash('error_msg', err.name);
+        console.log("here");
+        req.flash('error_msg', "Something is wrong");
         res.redirect('/');
       }
     });
-    request.get('http://localhost:3000/auctions/api/boughtby'+id,(err,response,body)=>{
-      if(response.statusCode==200){
-        var boughtAuctions=JSON.parse(body);
-      }else{
-        console.log(err);
-        req.flash('error_msg', err.name);
-        res.redirect('/');
-      }
-    });
-    res.render('profile',{user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
   });
 
   router.post('/addmoney',ensureAuthenticated,(req,res)=>{

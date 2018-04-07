@@ -7,7 +7,7 @@ router.get('/', function(req, res){
   request.get('http://localhost:3000/auctions/api/notover',(err,response,body)=>{
     if(response.statusCode==200){
       var auctions=JSON.parse(body);
-      res.render('auctions',auctions);//array of auction objects
+      res.render('auctions',{title:"Auctions | Auction Away",auctions:auctions});//array of auction objects
     }else{
       res.render('error',response.error);
     }
