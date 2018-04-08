@@ -96,37 +96,65 @@ router.get('/addauction',ensureAuthenticated,(req,res)=>{
   res.render('addauction',{title:"Create Auction | Auction Away"});
 });
 
+function convertDateToUTC(date) {
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+}
+
 router.post('/addauction',ensureAuthenticated,(req,res)=>{
-  //TODO: do validation if possible
-  var newAuction=new Auction({
-    name:req.body.name,
-    sellerid:req.user._id,
-    starttime:req.body.starttime,
-    bidprice:req.body.bidprice,
-    securitydeposit:req.body.securitydeposit,
-    description:req.body.description,
-    imageurl:req.body.imageurl
-  });
-  Auction.addAuction(newAuction,(err,auction)=>{
-    console.log(auction);
-    if(err){
-      console.log(err);
-      req.flash('error_msg', "Something is wrong");
-      res.redirect('/auctions/addauction');
+  var name = req.body.name;
+  var dayofauction=req.body.dayofauction;
+  var bidprice = req.body.bidprice;
+  var securitydeposit = req.body.securitydeposit;
+  var description = req.body.description;
+  // Validation
+  req.checkBody('name', 'Name is required').notEmpty();
+  req.checkBody('dayofauction', 'Day of Auction is required').notEmpty();
+  req.checkBody('bidprice', 'Bid price is required').notEmpty();
+  req.checkBody('securitydeposit', 'Security deposit is required').notEmpty();
+  req.checkBody('description', 'Description is required').notEmpty();
+  var errors = req.validationErrors();
+  if(errors){
+    res.render('addauction',{title:"Create Auction | Auction Away",errors:errors});
+  }else{
+    dayofauction=new Date(dayofauction+" GMT+0530");
+    var dayofcreation=new Date((new Date(Date.now())).toDateString()+" GMT+0530");
+    bidprice=parseInt(bidprice);
+    securitydeposit=parseInt(securitydeposit);
+    if(!isNan(bidprice) &&  !isNan(securitydeposit) && bidprice>securitydeposit && securitydeposit>0 && dayofauction>dayofcreation){
+      var newAuction=new Auction({
+        name:name,
+        sellerid:req.user._id,
+        dayofauction:dayofauction,
+        bidprice:bidprice,
+        securitydeposit:securitydeposit,
+        description:description,
+        dayofcreation:dayofcreation
+      });
+      Auction.addAuction(newAuction,(err,auction)=>{
+        console.log(auction);
+        if(err){
+          console.log(err);
+          req.flash('error_msg', "Something is wrong");
+          res.redirect('/auctions/addauction');
+        }else{
+          req.flash('success_msg','Auction added successfully');
+          res.redirect('/auctions/auction/'+auction['_id']);
+        }
+      });
     }else{
-      req.flash('success_msg','Auction added successfully');
-      res.redirect('/auctions/auction/'+auction['_id']);
+      req.flash('error_msg', "Check inputs");
+      res.redirect('/auctions/addauction');
     }
-  });
+  }
 });
 
 function ensureAuthenticated(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	} else {
-		//req.flash('error_msg','You are not logged in');
-		res.redirect('/users/login');
-	}
+  if(req.isAuthenticated()){
+    return next();
+  } else {
+    req.flash('error_msg','You are not logged in');
+    res.redirect('/users/login');
+  }
 }
 
 

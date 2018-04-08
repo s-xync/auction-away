@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 // auction schema
 const auctionSchema=mongoose.Schema({
-  //name, sellerid, starttime, bidprice, securitydeposit, description, imageurl, state(0,1,2), createtime
+  //name, sellerid, dayofauction, bidprice, securitydeposit, description, imageurl, state(0,1,2), dayofcreation
   name:{
     type:String,
     required: true
@@ -15,7 +15,7 @@ const auctionSchema=mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'User',
   },
-  starttime:{
+  dayofauction:{
     type:Date,
     required:true
   },
@@ -41,9 +41,9 @@ const auctionSchema=mongoose.Schema({
     type:Number,
     default:0
   },
-  createtime:{
+  dayofcreation:{
     type:Date,
-    default:Date.now
+    required:true
   }
 });
 
@@ -59,7 +59,7 @@ module.exports.getNotOverAuctions=(callback,limit)=>{
   var query={
     state:[0,1]
   };
-  Auction.find(query,callback).sort({"starttime":1}).limit(limit);
+  Auction.find(query,callback).sort({"dayofauction":1}).limit(limit);
 }
 
 //get auction by id
@@ -84,7 +84,7 @@ module.exports.allSoldBy=(sellerid,callback,limit)=>{
   var query={
     sellerid:sellerid
   };
-  Auction.find(query,callback).sort({"starttime":1}).limit(limit);
+  Auction.find(query,callback).sort({"dayofauction":1}).limit(limit);
 }
 
 //get all auctions bought by a buyer
@@ -92,5 +92,5 @@ module.exports.allBoughtBy=(buyerid,callback,limit)=>{
   var query={
     buyerid:buyerid
   };
-  Auction.find(query,callback).sort({"starttime":1}).limit(limit);
+  Auction.find(query,callback).sort({"dayofauction":1}).limit(limit);
 }

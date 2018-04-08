@@ -1,12 +1,38 @@
-AUCTIONS
-<p>{{title}}</p>
 <div class="container">
   <div class="section">
-    <!-- LEFT HERE AT APR 07 11:30 PM -->
+    {{#each auctions}}
+    <div class="row">
+      <div class="col s12 m10">
+        <a href="/auctions/auction/{{this._id}}">
+          <div class="card-panel grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+              <div class="col s2">
+                <img src="http://via.placeholder.com/300x300" alt="Item Image" class="circle responsive-img"> <!-- notice the "circle" class -->
+              </div>
+              <div class="col s10">
+                <span class="black-text">
+                  <b>Item Id : </b>{{this._id}}<br>
+                  <b>Item Name : </b>{{this.name}}<br>
+                  <b>Bid Price : </b>₹ {{this.bidprice}}<br>
+                  <b>Security : </b>₹ {{this.securitydeposit}}<br>
+                  <b>Day of Auction : </b>{{this.dayofauction}}<br>
+                  {{#ifeq this.state 0}}
+                  <b>Status : </b>Not Started<br>
+                  {{/ifeq}}
+                  {{#ifeq this.state 1}}
+                  <b>Status : </b>Started<br>
+                  {{/ifeq}}
+                  {{#ifeq this.state 2}}
+                  <b>Status : </b>Over<br>
+                  {{/ifeq}}
+                  <span class="truncate">{{this.description}}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    {{/each}}
   </div>
 </div>
-<ul>
-{{#each auctions}}
-    <li>{{this.name}}</li>
-{{/each}}
-</ul>

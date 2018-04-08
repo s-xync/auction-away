@@ -46,7 +46,7 @@ const User=module.exports=mongoose.model('User',userSchema);
 // }
 
 module.exports.createUser=(newUser,callback)=>{
-  bcrypt.hash(user.password, saltRounds, function(err, hash) {
+  bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
     if(err){
       throw err;
     }else{

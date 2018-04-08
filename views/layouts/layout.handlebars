@@ -7,6 +7,7 @@
   <!-- CSS -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link rel="stylesheet" href="/css/style.css">
   <!-- Scripts -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -37,6 +38,22 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+  <!-- Toasts -->
+  {{#if success_msg}}
+  <script>
+  Materialize.toast("{{success_msg}}",6000);
+  </script>
+  {{/if}}
+  {{#if error_msg}}
+  <script>
+  Materialize.toast("{{error_msg}}",6000);
+  </script>
+  {{/if}}
+  {{#if error}}
+  <script>
+  Materialize.toast("{{error}}",6000);
+  </script>
+  {{/if}}
 
   <!-- Views get rendered here -->
   {{{body}}}

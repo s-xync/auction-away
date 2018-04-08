@@ -24,7 +24,6 @@ router.post('/register', function(req, res){
   var email = req.body.email;
   var password = req.body.password;
   var password2 = req.body.password2;
-  var imageurl=req.body.imageurl;
 
   // Validation
   req.checkBody('firstname', 'First Name is required').notEmpty();
@@ -38,17 +37,14 @@ router.post('/register', function(req, res){
   var errors = req.validationErrors();
 
   if(errors){
-    res.render('register',{title:"Register | Auction Away",
-      errors:errors
-    });
-  } else {
+    res.render('register',{title:"Register | Auction Away",errors:errors});
+  }else{
     var newUser = new User({
       firstname: firstname,
       lastname: lastname,
       email:String(email).toLowerCase(),
       username: String(username).toLowerCase(),
-      password: password,
-      imageurl: imageurl
+      password: password
     });
 
     User.createUser(newUser, function(err, user){
@@ -110,7 +106,7 @@ passport.use(new LocalStrategy(
   router.get('/logout', function(req, res){
     req.logout();
     req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login');
+    res.redirect('/');
   });
 
   router.get('/profile',ensureAuthenticated,function(req,res){
@@ -122,7 +118,7 @@ passport.use(new LocalStrategy(
         request.get('http://localhost:3000/auctions/api/boughtby/'+id,(err,response,body)=>{
           if(!err){
             var boughtAuctions=JSON.parse(body);
-            res.render('profile',{title:req.user.firstname+""+req.user.lastname+" | Auction Away",user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
+            res.render('profile',{title:req.user.firstname+" "+req.user.lastname+" | Auction Away",user:req.user,soldAuctions:soldAuctions,boughtAuctions:boughtAuctions});
           }else{
             console.log(err);
             req.flash('error_msg', "Something is wrong");
@@ -162,21 +158,21 @@ passport.use(new LocalStrategy(
           });
         }else{
           req.flash('error_msg','Unknown User');
-      		res.redirect('/users/login');
+          res.redirect('/users/login');
         }
       });
     }else{
       req.flash('error_msg','Check the amount');
-  		res.redirect('/users/profile');
+      res.redirect('/users/profile');
     }
   });
 
   function ensureAuthenticated(req, res, next){
-  	if(req.isAuthenticated()){
-  		return next();
-  	} else {
-  		//req.flash('error_msg','You are not logged in');
-  		res.redirect('/users/login');
-  	}
+    if(req.isAuthenticated()){
+      return next();
+    } else {
+      req.flash('error_msg','You are not logged in');
+      res.redirect('/users/login');
+    }
   }
   module.exports = router;
