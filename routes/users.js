@@ -137,7 +137,7 @@ passport.use(new LocalStrategy(
   router.post('/addmoney',ensureAuthenticated,(req,res)=>{
     var userid=req.user._id;
     var amount=parseInt(req.body.amount);
-    if(!isNan(amount) && amount>0){
+    if(!isNaN(amount) && amount>0){
       User.findById(userid,function(err,user){
         if(err){
           console.log(err);

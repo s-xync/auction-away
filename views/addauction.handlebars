@@ -1,1 +1,61 @@
-ADDAUCTION
+{{#if errors}}
+{{#each errors}}
+<script>
+Materialize.toast("{{msg}}",6000);
+</script>
+{{/each}}
+{{/if}}
+<main>
+  <center>
+    <div class="section"></div>
+    <h5 class="indigo-text">Auction an Item Away</h5>
+    <div class="section"></div>
+    <div class="container">
+      <div class="z-depth-1 grey lighten-4 row" style="width:60% display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <form class="col s12" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class = "material-icons prefix">dvr</i>
+              <input name="name" id="name" type="text" class="validate" required>
+              <label for="name">Item Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">attach_money</i>
+              <input name="bidprice" id="bidprice" type="text" class="validate" required>
+              <label for="bidprice">Start Price(Rupees)</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">date_range</i>
+              <input type="text" class="datepicker" id="dayofauction" name="dayofauction" required>
+              <label for="dayofauction">Day of Auction</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">mode_edit</i>
+              <textarea name="description" id="description" class="materialize-textarea" required></textarea>
+              <label for="description">Add Description</label>
+            </div>
+          </div>
+          <center>
+            <div class="row">
+              <div class="col s2"></div>
+              <div class='col s3'>
+                <button type='reset' name='btn_reset' class='col s12 btn btn-large waves-effect red'><i class="material-icons right">clear_all</i>Clear</button>
+              </div>
+              <div class='col s5'>
+                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'><i class="material-icons right">send</i>Submit</button>
+              </div>
+              <div class="col s2"></div>
+            </div>
+          </center>
+        </form>
+      </div>
+    </div>
+  </center>
+  <div class="section"></div>
+</main>

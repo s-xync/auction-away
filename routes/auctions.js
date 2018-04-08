@@ -104,13 +104,11 @@ router.post('/addauction',ensureAuthenticated,(req,res)=>{
   var name = req.body.name;
   var dayofauction=req.body.dayofauction;
   var bidprice = req.body.bidprice;
-  var securitydeposit = req.body.securitydeposit;
   var description = req.body.description;
   // Validation
   req.checkBody('name', 'Name is required').notEmpty();
   req.checkBody('dayofauction', 'Day of Auction is required').notEmpty();
   req.checkBody('bidprice', 'Bid price is required').notEmpty();
-  req.checkBody('securitydeposit', 'Security deposit is required').notEmpty();
   req.checkBody('description', 'Description is required').notEmpty();
   var errors = req.validationErrors();
   if(errors){
@@ -119,14 +117,13 @@ router.post('/addauction',ensureAuthenticated,(req,res)=>{
     dayofauction=new Date(dayofauction+" GMT+0530");
     var dayofcreation=new Date((new Date(Date.now())).toDateString()+" GMT+0530");
     bidprice=parseInt(bidprice);
-    securitydeposit=parseInt(securitydeposit);
-    if(!isNan(bidprice) &&  !isNan(securitydeposit) && bidprice>securitydeposit && securitydeposit>0 && dayofauction>dayofcreation){
+    if(!isNaN(bidprice) && bidprice>0 && dayofauction>dayofcreation){
       var newAuction=new Auction({
         name:name,
         sellerid:req.user._id,
         dayofauction:dayofauction,
         bidprice:bidprice,
-        securitydeposit:securitydeposit,
+        securitydeposit:parseInt(bidprice/2),
         description:description,
         dayofcreation:dayofcreation
       });

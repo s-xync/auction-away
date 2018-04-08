@@ -1,1 +1,50 @@
-AUCTION
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card-panel grey lighten-5 z-depth-1">
+          <div class="row ">
+            <div class="col s12 l3 m3">
+              <img src="http://via.placeholder.com/300x300" alt="Item Image" class="responsive-img">
+            </div>
+            <div class="col s12 l1 m1"></div>
+            <div class="col s12 l8 m8">
+              <div class="row">
+                <span class="black-text" style="font-size:160%;">
+                  <b>Item Id : </b>{{auction._id}}<br>
+                  <b>Item Name : </b>{{auction.name}}<br>
+                  <b>Bid Price : </b>₹ {{auction.bidprice}}<br>
+                  <b>Security Wallet Balance : </b>₹ {{auction.securitydeposit}}<br>
+                  <span id="dayofauction"></span><br>
+                  <script>
+                  var dateObject="{{auction.dayofauction}}";
+                  var dateString=(new Date(dateObject)).toDateString();
+                  $("#dayofauction").html("<b>Day of Auction : </b>"+dateString);
+                  </script>
+                  <span id="dayofcreation"></span><br>
+                  <script>
+                  var dateObject="{{auction.dayofcreation}}";
+                  var dateString=(new Date(dateObject)).toDateString();
+                  $("#dayofcreation").html("<b>Created On : </b>"+dateString);
+                  </script>
+                  {{#ifeq auction.state 0}}
+                  <b>Status : </b>Not Started<br>
+                  <span class="down"><a class='btn btn-small waves-effect green' href="#"><i class="material-icons right">send</i>Enter Auction</a></span><br>
+                  {{/ifeq}}
+                  {{#ifeq auction.state 1}}
+                  <b>Status : </b>Started<br>
+                  <!-- TODO: Add text field and use post request to bid -->
+                  {{/ifeq}}
+                  {{#ifeq auction.state 2}}
+                  <b>Status : </b>Over<br>
+                  {{/ifeq}}
+                  <b>Description : </b>{{auction.description}}<br>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

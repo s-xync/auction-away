@@ -14,8 +14,13 @@
                   <b>Item Id : </b>{{this._id}}<br>
                   <b>Item Name : </b>{{this.name}}<br>
                   <b>Bid Price : </b>₹ {{this.bidprice}}<br>
-                  <b>Security : </b>₹ {{this.securitydeposit}}<br>
-                  <b>Day of Auction : </b>{{this.dayofauction}}<br>
+                  <b>Security Wallet Balance : </b>₹ {{this.securitydeposit}}<br>
+                  <span id="dayofauction"></span><br>
+                  <script>
+                  var dateObject="{{this.dayofauction}}";
+                  var dateString=(new Date(dateObject)).toDateString();
+                  $("#dayofauction").html("<b>Day of Auction : </b>"+dateString);
+                  </script>
                   {{#ifeq this.state 0}}
                   <b>Status : </b>Not Started<br>
                   {{/ifeq}}
