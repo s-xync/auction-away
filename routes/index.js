@@ -9,7 +9,9 @@ router.get('/', function(req, res){
       var auctions=JSON.parse(body);
       res.render('auctions',{title:"Auctions | Auction Away",auctions:auctions});//array of auction objects
     }else{
-      res.render('error',response.error);
+      console.log(err);
+      console.log(response.error);
+      res.redirect('/error');
     }
   });
 });

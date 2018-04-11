@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
+var User = require('../models/user');
 var Auction = require('../models/auction');
 
 //not really used anywhere
@@ -142,6 +143,56 @@ router.post('/addauction',ensureAuthenticated,(req,res)=>{
       req.flash('error_msg', "Check inputs");
       res.redirect('/auctions/addauction');
     }
+  }
+});
+
+router.post('/bidonauction',ensureAuthenticated,(req,res)=>{
+  var userid=req.user._id;
+  var auctionid=req.body.auctionid;
+  var bidamount=parseInt(req.body.bidamount);
+  if(!isNaN(bidamount) && bidamount>0){
+    User.findById(userid,function(err,user){
+      if(err){
+        console.log(err);
+        req.flash('error_msg', err.name);
+        res.redirect('/');
+      }
+      if(user){
+        request.get('http://localhost:3000/auctions/api/auction/'+auctionid,(err,response,body)=>{
+          if(response.statusCode==200){
+            var auction=JSON.parse(body);
+            if(bidamount>auction.bidprice && user.balance>=auction.securitydeposit && auction.status==1){
+              auction.bidprice=bidamount;
+              auction.buyerid=user._id;
+              auction.save(function(err){
+                if(err){
+                  console.log(err);
+                  req.flash('error_msg', err.name);
+                  res.redirect('/auctions/auction/'+auction._id);
+                }else{
+                  req.flash('success_msg', "Bid successful");
+                  res.redirect('/auctions/auction/'+auction._id);
+                }
+              });
+            }else{
+              req.flash('error_msg',"Something is wrong");
+              res.redirect('/auctions/auction/'+auction._id);
+            }
+          }else{
+            console.log(err);
+            req.flash('error_msg',"Something is wrong");
+            res.redirect('/');
+          }
+        });
+
+      }else{
+        req.flash('error_msg','Unknown User');
+        res.redirect('/users/login');
+      }
+    });
+  }else{
+    req.flash('error_msg','Check the bid amount');
+    res.redirect('/auctions/auction/'+auctionid);
   }
 });
 
