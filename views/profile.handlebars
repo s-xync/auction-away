@@ -1,41 +1,27 @@
  <div class="container">
   <div class="section">
-
-    <!--   Icon Section   -->
-    <br><br><br>
-
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card-panel grey lighten-5 z-depth-1">
           <div class="row ">
-
-
             <div class="col s12 l6 m6">
               <img src="http://via.placeholder.com/400x400" alt="" class="responsive-img"> <!-- notice the "circle" class -->
             </div>
-
             <div class="col s12 m6 l6 ">
-
-
               <div class="row">
-
                 <span class="black-text flow-text">
-
                   <h3>{{user.firstname}} {{user.lastname}}</h3>
                   <b>User Id : </b>{{user._id}}<br>
                   <b>Email id : </b>{{user.email}}<br>
                   <b>Username : </b>{{user.username}}<br>
                   <b>Wallet Balance : </b>{{user.balance}}<br>
-
                   <br>
-
                   <form method="POST" action="/users/addmoney">
                     <div class="input-field col s7 m8 l8">
                       <i class="material-icons prefix">attach_money</i>
                       <input name="amount" id="amount" type="text" class="validate" required>
                       <label for="amount">Add to Wallet(Rupees)</label>
                     </div>
-
                     <div class="input-field col s5 m4 l4">
                       <button class="btn waves-effect waves-light teal" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
@@ -44,20 +30,13 @@
                   </form>
                 </span>
               </div>
-            </div> 
-
+            </div>
           </div>
         </div>
       </div>
     </div>
-    
   </div>
-
-
-
 <h4 class="teal-text bold">Sold by You : </h4>
-
-
   <div class="section">
     {{#each soldAuctions}}
     <div class="row">
@@ -99,9 +78,7 @@
     </div>
     {{/each}}
   </div>
-
 <h4 class="teal-text bold">Bought by You : </h4>
-
   <div class="section">
     {{#each boughtAuctions}}
     <div class="row">

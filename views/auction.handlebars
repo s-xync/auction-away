@@ -27,13 +27,12 @@
                   var dateString=(new Date(dateObject)).toDateString();
                   $("#dayofcreation").html("<b>Created On : </b>"+dateString);
                   </script>
+                  <!-- TODO: Add node scheduler and change these -->
                   {{#ifeq auction.state 1}}
                   <b>Status : </b>Not Started<br>
-                  
                   {{/ifeq}}
                   {{#ifeq auction.state 0}}
                   <b>Status : </b>Started<br>
-                  <!-- TODO: Add text field and use post request to bid -->
                   <form action="/auctions/bidonauction" method="POST" >
                     <div class="row">
                       <div class="input-field col s8 m9 l9">
@@ -47,7 +46,7 @@
                           <i class="material-icons right">send</i>
                         </button>
                       </div>
-                   </div>
+                    </div>
                   </form>
                   {{/ifeq}}
                   {{#ifeq auction.state 2}}
