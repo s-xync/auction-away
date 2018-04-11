@@ -150,6 +150,7 @@ router.post('/bidonauction',ensureAuthenticated,(req,res)=>{
   var userid=req.user._id;
   var auctionid=req.body.auctionid;
   var bidamount=parseInt(req.body.bidamount);
+  console.log(userid,auctionid,bidamount);
   if(!isNaN(bidamount) && bidamount>0){
     User.findById(userid,function(err,user){
       if(err){
@@ -161,7 +162,7 @@ router.post('/bidonauction',ensureAuthenticated,(req,res)=>{
         request.get('http://localhost:3000/auctions/api/auction/'+auctionid,(err,response,body)=>{
           if(response.statusCode==200){
             var auction=JSON.parse(body);
-            if(bidamount>auction.bidprice && user.balance>=auction.securitydeposit && auction.status==1){
+            if(bidamount>auction.bidprice && user.balance>=auction.securitydeposit && auction.state==0){
               auction.bidprice=bidamount;
               auction.buyerid=user._id;
               auction.save(function(err){

@@ -27,13 +27,28 @@
                   var dateString=(new Date(dateObject)).toDateString();
                   $("#dayofcreation").html("<b>Created On : </b>"+dateString);
                   </script>
-                  {{#ifeq auction.state 0}}
-                  <b>Status : </b>Not Started<br>
-                  <span class="down"><a class='btn btn-small waves-effect green' href="#"><i class="material-icons right">send</i>Enter Auction</a></span><br>
-                  {{/ifeq}}
                   {{#ifeq auction.state 1}}
+                  <b>Status : </b>Not Started<br>
+                  
+                  {{/ifeq}}
+                  {{#ifeq auction.state 0}}
                   <b>Status : </b>Started<br>
                   <!-- TODO: Add text field and use post request to bid -->
+                  <form action="/auctions/bidonauction" method="POST" >
+                    <div class="row">
+                      <div class="input-field col s8 m9 l9">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input name="bidamount" id="bidamount" type="text" class="validate" required>
+                        <label for="bidamount">Bid Price(Rupees)</label>
+                      </div>
+                      <input name="auctionid" id="auctionid" value = "{{auction._id}}" hidden="true" required>
+                      <div class="input-field col s4 m3 l3">
+                        <button class="btn waves-effect waves-light teal" type="submit" name="action">Submit
+                          <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                   </div>
+                  </form>
                   {{/ifeq}}
                   {{#ifeq auction.state 2}}
                   <b>Status : </b>Over<br>
