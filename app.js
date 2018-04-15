@@ -89,7 +89,7 @@ app.listen(app.get('port'), function(){
 });
 
 app.get('/error',function(req,res){
-  res.render('error');
+  res.render('error',{title:"404 | Auction Away"});
 });
 //this has to be at the end of all other routes
 app.get('*',function (req,res){
