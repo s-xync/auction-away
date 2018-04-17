@@ -76,6 +76,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Logs all requests to the console
+app.use(function (req,res,next){
+  console.log(new Date(), req.method, req.url);
+  next();
+});
+
 // Routes to Mini Apps
 app.use('/', routes);
 app.use('/users', users);
