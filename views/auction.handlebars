@@ -28,10 +28,10 @@
                   $("#dayofcreation").html("<b>Created On : </b>"+dateString);
                   </script>
                   <!-- TODO: Add node scheduler and change these -->
-                  {{#ifeq auction.state 1}}
+                  {{#ifeq auction.state 0}}
                   <b>Status : </b>Not Started<br>
                   {{/ifeq}}
-                  {{#ifeq auction.state 0}}
+                  {{#ifeq auction.state 1}}
                   <b>Status : </b>Started<br>
                   <form action="/auctions/bidonauction" method="POST" >
                     <div class="row">
