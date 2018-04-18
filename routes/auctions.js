@@ -164,7 +164,7 @@ router.post('/bidonauction',ensureAuthenticated,(req,res)=>{
             req.flash('error_msg', err.name);
             res.redirect('/');
           }else{
-            if(bidamount>auction.bidprice && user.balance>=auction.securitydeposit && auction.state==0){
+            if(bidamount>auction.bidprice && user.balance>=auction.securitydeposit && auction.state==1){
               auction.bidprice=bidamount;
               auction.buyerid=user._id;
               auction.save(function(err){
