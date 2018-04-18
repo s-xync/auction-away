@@ -90,9 +90,11 @@ app.use('/auctions',auctions);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
-
+process.title = 'node-app'
 app.listen(app.get('port'), function(){
   console.log('Server started on port '+app.get('port'));
+  console.log('This process is your pid ' + process.pid);
+  console.log('This process is your process name ' + process.title);
 });
 
 app.get('/error',function(req,res){
