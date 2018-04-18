@@ -9,6 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
+const schedule = require('node-schedule');
 
 // Connect to mongodb using mongoose orm
 mongoose.connect('mongodb://localhost/auctionaway');
@@ -76,6 +77,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Logs all requests to the console
+app.use(function (req,res,next){
+  console.log(new Date(), req.method, req.url);
+  next();
+});
+
 // Routes to Mini Apps
 app.use('/', routes);
 app.use('/users', users);
@@ -94,6 +101,16 @@ app.get('/error',function(req,res){
 //this has to be at the end of all other routes
 app.get('*',function (req,res){
   res.redirect('/error');
+});
+
+const start = schedule.scheduleJob('0 0 0 * * *', function(){
+  console.log('Starting auctions for the day');
+
+});
+
+const stop = schedule.scheduleJob('59 59 23 * * *', function(){
+  console.log('Stopping auctions for the day');
+  
 });
 
 // Auction=require('./models/auction');
