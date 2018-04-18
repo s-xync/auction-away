@@ -1,6 +1,6 @@
 {
   "name": "auction-away",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AuctionAway is aimed at providing a modern and seamless online solution to people who want to auction the things they no longer use at much higher prices than the ones offered by good-old classified ads. It can also be used by firms who want to bring their auctioning process online.",
   "main": "app.js",
   "directories": {
