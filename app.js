@@ -113,7 +113,7 @@ const start = schedule.scheduleJob('0 0 0 * * *', function(){
 
 const stop = schedule.scheduleJob('59 59 23 * * *', function(){
   console.log('Stopping auctions for the day');
-  
+
 });
 
 // Auction=require('./models/auction');
