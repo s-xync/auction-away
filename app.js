@@ -12,7 +12,8 @@ const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 
 // Connect to mongodb using mongoose orm
-mongoose.connect('mongodb://mongo/auctionaway');
+// if using docker image of mongo, use the service name you have given in the docker-compose.yml file instead of localhost. If the service name is mongo, use the url mongodb://mongo/auctionaway
+mongoose.connect('mongodb://localhost/auctionaway');
 var db=mongoose.connection;
 
 // Mini Apps
