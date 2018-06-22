@@ -1,4 +1,8 @@
-/coverage
-/docs
-/test
-/node_modules
+coverage/
+node_modules/
+test/
+data/
+docs/
+Dockerfile
+.dockerignore
+docker-compose.yml
