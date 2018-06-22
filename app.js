@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 
 // Connect to mongodb using mongoose orm
-mongoose.connect('mongodb://localhost/auctionaway');
+mongoose.connect('mongodb://mongo/auctionaway');
 var db=mongoose.connection;
 
 // Mini Apps
@@ -113,7 +113,7 @@ const start = schedule.scheduleJob('0 0 0 * * *', function(){
 
 const stop = schedule.scheduleJob('59 59 23 * * *', function(){
   console.log('Stopping auctions for the day');
-  
+
 });
 
 // Auction=require('./models/auction');
