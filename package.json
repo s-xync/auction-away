@@ -7,7 +7,6 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
     "start": "node app.js"
   },
   "repository": {
@@ -23,7 +22,6 @@
   "dependencies": {
     "bcryptjs": "*",
     "body-parser": "*",
-    "chai": "^4.1.2",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
     "express": "*",
@@ -31,7 +29,6 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
-    "mocha": "^5.1.0",
     "mongoose": "*",
     "node-gyp": "*",
     "node-schedule": "*",
