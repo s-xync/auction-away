@@ -1,4 +1,5 @@
 FROM node:latest
+LABEL SaiKumar Immadi
 RUN mkdir -p /usr/src/auction-away
 WORKDIR /usr/src/auction-away
 COPY package.json /usr/src/auction-away/
