@@ -3,6 +3,7 @@ data/
 docs/
 test/
 coverage/
-Dockerfile
+AuctionAwayDockerfile
+NginxDockerfile
+nginx.conf
 .dockerignore
-docker-compose.yml
