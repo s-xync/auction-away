@@ -15,7 +15,7 @@
     "url": "git+https://github.com/s-xync/auction-away.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "gpl-3.0",
   "bugs": {
     "url": "https://github.com/s-xync/auction-away/issues"
   },
