@@ -12,7 +12,6 @@ const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 
 // Connect to mongodb using mongoose orm
-// if using docker image of mongo, use the service name you have given in the docker-compose.yml file instead of localhost. If the service name is mongo, use the url mongodb://mongo/auctionaway
 if(process.env.MONGODB_PORT_27017_TCP_ADDR && process.env.MONGODB_PORT_27017_TCP_PORT){//container linked with name mongodb
   mongoose.connect('mongodb://'+process.env.MONGODB_PORT_27017_TCP_ADDR+':'+process.env.MONGODB_PORT_27017_TCP_PORT+'/auctionaway');
 }else{//local system
