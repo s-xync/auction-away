@@ -12,6 +12,7 @@ const mongoose = require("mongoose");
 const schedule = require("node-schedule");
 
 // Connect to mongodb using mongoose orm
+mongoose.Promise = Promise;
 if (
   process.env.MONGODB_PORT_27017_TCP_ADDR &&
   process.env.MONGODB_PORT_27017_TCP_PORT
@@ -25,7 +26,10 @@ if (
       "/auctionaway"
   );
 } else if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(
+    process.env.MONGODB_URI,
+    { useCreateIndex: true, useNewUrlParser: true }
+  );
 } else {
   //local system
   mongoose.connect("mongodb://localhost/auctionaway");

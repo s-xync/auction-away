@@ -32,7 +32,7 @@
     "express-session": "*",
     "express-validator": "*",
     "mocha": "^5.1.0",
-    "mongoose": "*",
+    "mongoose": "^5.3.7",
     "node-gyp": "*",
     "node-schedule": "*",
     "passport": "*",
